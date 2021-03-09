@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "121029471012",
+    "project_id": "rozbiorka-90900",
+    "storage_bucket": "rozbiorka-90900.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121029471012:android:5c921e06b5de93fa0561b1",
+        "android_client_info": {
+          "package_name": "com.osmelak.rozbiorka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121029471012-09s5chonv7b05s45iqsmmh5b69970odn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.osmelak.rozbiorka",
+            "certificate_hash": "0c561f78b0df7b102956510a5eae9be1fbb5abe5"
+          }
+        },
+        {
+          "client_id": "121029471012-4kg31fivgrggl7pij0d1c3ms8lt5g6tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKzB2cnLba3u-W6fCn1Skd1k5LZb4YQOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121029471012-4kg31fivgrggl7pij0d1c3ms8lt5g6tj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
