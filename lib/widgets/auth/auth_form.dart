@@ -1,10 +1,8 @@
-// Naprawianie klawiatury -> zabawa z media query i SizeBoxem z 87 linii
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:rozbiorka/pickers/user_image_picker.dart';
 
@@ -47,7 +45,7 @@ class _AuthFormState extends State<AuthForm> {
     if (_userImageFile == null && !_isLogin) {
       Scaffold.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please pick an image'),
+          content: Text('Wybierz avatar!'),
           backgroundColor: Theme.of(context).errorColor,
         ),
       );
@@ -86,9 +84,7 @@ class _AuthFormState extends State<AuthForm> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        _isLogin
-                            ? SizedBox(height: 150)
-                            : SizedBox(height: 100),
+                        _isLogin ? SizedBox(height: 150) : SizedBox(height: 50),
                         if (!_isLogin) UserImagePicker(_pickedImage),
                         if (!_isLogin) SizedBox(height: 15),
                         Container(
@@ -140,13 +136,16 @@ class _AuthFormState extends State<AuthForm> {
                             ),
                           ),
                         ),
-                        if (!_isLogin) SizedBox(height: 30),
+                        if (!_isLogin)
+                          SizedBox(height: !isKeyboardVisible ? 30 : 20),
                         if (!_isLogin)
                           TextFormField(
                             key: ValueKey('username'),
                             validator: (value) {
                               if (value.isEmpty || value.length < 4) {
                                 return 'Nick musi zawierać przynajmniej 4 znaki';
+                              } else if (value.length > 12) {
+                                return 'Nick nie może być dłuższy niż 12 znaków';
                               }
                               return null;
                             },
@@ -179,7 +178,7 @@ class _AuthFormState extends State<AuthForm> {
                               ),
                             ),
                           ),
-                        SizedBox(height: 30),
+                        SizedBox(height: !isKeyboardVisible ? 30 : 20),
                         Container(
                           decoration: BoxDecoration(boxShadow: [
                             BoxShadow(
@@ -241,7 +240,7 @@ class _AuthFormState extends State<AuthForm> {
                           ),
                         ),
                         !_isLogin
-                            ? SizedBox(height: 30)
+                            ? SizedBox(height: 20)
                             : Container(
                                 padding: EdgeInsets.only(top: 10.0),
                                 alignment: Alignment.centerRight,

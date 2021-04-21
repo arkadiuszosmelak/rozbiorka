@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+// import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class MessageBubble extends StatelessWidget {
   MessageBubble(
     this.message,
     this.username,
-    this.userimage,
+    this.timestamp,
+    this.previousTimestamp,
     this.isMe, {
     this.key,
   });
@@ -12,19 +15,58 @@ class MessageBubble extends StatelessWidget {
   final Key key;
   final String message;
   final String username;
-  final String userimage;
+  final int timestamp;
+  final int previousTimestamp;
   final bool isMe;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+    // Intl.defaultLocale = 'pl';
+    DateTime time = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    DateTime previousTime =
+        DateTime.fromMillisecondsSinceEpoch(previousTimestamp);
+    DateTime timeNow = DateTime.now();
+    var formats = DateFormat();
+
+    var visibleMessageDate = false;
+
+    // wyswietla date nad wiadomoscia tylko gdy poprzednia byla ponad 15 min wczesniej
+    if (time.isAfter(previousTime.add(Duration(minutes: 15)))) {
+      visibleMessageDate = true;
+    }
+
+    // dekorator daty
+    if (time.year == timeNow.year &&
+        time.month == timeNow.month &&
+        time.day == timeNow.day) {
+      formats = DateFormat("HH:mm");
+    } else if (time.isAfter(timeNow.subtract(Duration(days: 7)))) {
+      formats = DateFormat("EEEE • HH:mm");
+    } else if (time.year == timeNow.year) {
+      formats = DateFormat("EE d MMM • HH:mm");
+    } else {
+      formats = DateFormat("EE d MMM yyyy • HH:mm");
+    }
+    var dateString = formats.format(time);
+
+    return Column(
+      crossAxisAlignment:
+          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Stack(
+        visibleMessageDate
+            ? Center(
+                child: Text(dateString),
+              )
+            : const SizedBox(),
+        Row(
+          mainAxisAlignment:
+              isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              constraints: BoxConstraints(maxWidth: 200),
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.8,
+              ),
               decoration: BoxDecoration(
                 color: isMe
                     ? Theme.of(context).primaryColor
@@ -36,14 +78,12 @@ class MessageBubble extends StatelessWidget {
                   bottomRight: isMe ? Radius.circular(0) : Radius.circular(12),
                 ),
               ),
-
-              // width: 140,
               padding: EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 16,
               ),
               margin: EdgeInsets.symmetric(
-                vertical: 17,
+                vertical: 5,
                 horizontal: 8,
               ),
               child: Column(
@@ -51,17 +91,9 @@ class MessageBubble extends StatelessWidget {
                     isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
                   Text(
-                    username,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: isMe
-                          ? Theme.of(context).accentTextTheme.headline1.color
-                          : Colors.black,
-                    ),
-                  ),
-                  Text(
                     message,
                     style: TextStyle(
+                      fontSize: 16,
                       color: isMe
                           ? Theme.of(context).accentTextTheme.headline1.color
                           : Colors.black,
@@ -70,16 +102,7 @@ class MessageBubble extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              top: 0,
-              left: isMe ? -10 : null,
-              right: !isMe ? -20 : null,
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(userimage),
-              ),
-            ),
           ],
-          overflow: Overflow.visible,
         ),
       ],
     );

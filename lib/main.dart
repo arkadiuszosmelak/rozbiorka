@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
             ),
+            highlightColor: Colors.indigo,
           ),
           home: appSnapshot.connectionState != ConnectionState.done
               ? SplashScreen()

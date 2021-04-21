@@ -36,8 +36,12 @@ dependencies:
   flutter_facebook_auth: ^2.0.2
   flutter_keyboard_visibility: ^4.0.0
   image_picker: ^0.6.7+22
-  # carousel_slider: ^3.0.0
   flutter_swiper: ^1.1.6
+  multi_image_picker: ^4.7.15
+  flutter_absolute_path: ^1.0.6
+  uuid: ^2.2.2
+  flutter_native_image: ^0.0.5+3
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:
@@ -59,9 +63,6 @@ flutter:
     - assets/icons/fb_icon.png
     - assets/icons/google_icon.png
     - assets/icons/user_icon.png
-    - assets/images/zdj0.jpg
-    - assets/images/zdj1.jpg
-    - assets/images/zdj2.jpg
 
     
 

@@ -4,6 +4,8 @@ import 'package:rozbiorka/screens/chats_screen.dart';
 import 'package:rozbiorka/screens/products_screen.dart';
 import 'package:rozbiorka/screens/account_screen.dart';
 import 'package:rozbiorka/screens/add_perfume.dart';
+import 'package:rozbiorka/screens/orders.dart';
+// import 'package:rozbiorka/screens/this_user.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,9 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _widgetOptions = <Widget>[
     ProductsScreen(),
     ChatsScreen(),
-    Text(
-      'Zamówienia',
-    ),
+    Orders(),
     AccountScreen(),
   ];
 

@@ -1,58 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:rozbiorka/screens/this_user.dart';
+import 'package:rozbiorka/screens/user_orders.dart';
 
 class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: users.snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
-
-        return Column(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Column(
           children: [
-            Container(
-              height: 300,
-              child: ListView(
-                children: snapshot.data.docs.map((DocumentSnapshot document) {
-                  return Container(
-                    child: user.email == document.data()['email']
-                        ? Column(
-                            children: [
-                              Text(document.data()['username']),
-                              Text(document.data()['email']),
-                              // Text(document.data()['image_url']),
-                              Image.network(document.data()['image_url']),
-                            ],
-                          )
-                        : Text(''),
-                  );
-                }).toList(),
-              ),
+            Text(
+              'Witaj!',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-            RaisedButton(
-              child: Text('Wyloguj'),
-              onPressed: () => FirebaseAuth.instance.signOut(),
+            Text(
+              user.displayName,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ],
-        );
-      },
+        ),
+        FutureBuilder(
+          future: ThisUser().getTextFromFile(user.displayName),
+          initialData: "https://i.stack.imgur.com/l60Hf.png",
+          builder: (BuildContext context, AsyncSnapshot<String> text) {
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(text.data),
+                minRadius: 100,
+                maxRadius: 100,
+              ),
+            );
+          },
+        ),
+        Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserOrders(),
+                  ),
+                );
+              },
+              child: Center(
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  child: Card(
+                    child: Center(
+                      child: Text('Moje ogłoszenia'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () => FirebaseAuth.instance.signOut(),
+              child: Center(
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  child: Card(
+                    color: Colors.indigo[200],
+                    child: Center(
+                      child: Text('Wyloguj'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
-
-// final user = FirebaseAuth.instance.currentUser;
-//           RaisedButton(
-//             child: Text('Wyloguj'),
-//             onPressed: () => FirebaseAuth.instance.signOut(),
-//           ),

@@ -1,46 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:rozbiorka/screens/zamowienie.dart' as zamowienie;
 
 class PerfumeCounter extends StatefulWidget {
+  PerfumeCounter(this.capacity, this.price, this.name);
+  final int capacity;
+  final double price;
+  final String name;
   @override
   _PerfumeCounterState createState() => _PerfumeCounterState();
 }
 
 class _PerfumeCounterState extends State<PerfumeCounter> {
-  var _counter = 1;
-  var _price = 1.5;
-  int _max = 80;
+  int _counter = 1;
   int _min = 1;
-
-  void _add() {
-    if (_counter == 1) {
-      setState(() {
-        _counter += 4;
-      });
-    } else if (_counter != _max) {
-      setState(() {
-        _counter += 5;
-      });
-    }
-  }
-
-  void _subtraction() {
-    if (_counter == 5) {
-      setState(() {
-        _counter -= 4;
-      });
-    }
-    if (_counter != _min) {
-      setState(() {
-        _counter -= 5;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    // print(mediaQuery.size.width);
-    // print(mediaQuery.size.height);
+    // var mediaQuery = MediaQuery.of(context);
+    var _price = widget.price;
+    int _max = widget.capacity;
+    void _add() {
+      if (_counter == 1) {
+        setState(() {
+          _counter += 4;
+          zamowienie.edytujMape(widget.name, _counter, _price * _counter);
+          print(zamowienie.zamowienie);
+        });
+      } else if (_counter != _max) {
+        setState(() {
+          _counter += 5;
+          zamowienie.edytujMape(widget.name, _counter, _price * _counter);
+          print(zamowienie.zamowienie);
+        });
+      }
+    }
+
+    void _subtraction() {
+      if (_counter == 5) {
+        setState(() {
+          _counter -= 4;
+          zamowienie.edytujMape(widget.name, _counter, _price * _counter);
+          print(zamowienie.zamowienie);
+        });
+      }
+      if (_counter != _min) {
+        setState(() {
+          _counter -= 5;
+          zamowienie.edytujMape(widget.name, _counter, _price * _counter);
+          print(zamowienie.zamowienie);
+        });
+      }
+    }
+
     return Center(
       child: Container(
         decoration: BoxDecoration(

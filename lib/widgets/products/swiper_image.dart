@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class SwiperImage extends StatelessWidget {
+  SwiperImage(this.itemCount, this.listaZdjec);
+  final int itemCount;
+  final listaZdjec;
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
@@ -16,12 +19,12 @@ class SwiperImage extends StatelessWidget {
             viewportFraction: 0.8,
             scale: 0.9,
             itemBuilder: (BuildContext context, int index) {
-              return Image(
+              return Image.network(
+                listaZdjec[index],
                 height: mediaQuery.size.height * 0.5,
-                image: AssetImage('assets/images/zdj$index.jpg'),
               );
             },
-            itemCount: 3,
+            itemCount: itemCount,
             pagination: SwiperPagination(),
           ),
         ),

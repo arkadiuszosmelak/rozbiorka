@@ -8,7 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../widgets/auth/auth_form.dart';
+import 'package:rozbiorka/widgets/auth/auth_form.dart';
 import 'package:rozbiorka/error/firebase_auth_error.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -51,13 +51,13 @@ class _AuthScreenState extends State<AuthScreen> {
 
       final url = await ref.getDownloadURL();
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(authResult.user.uid)
-          .set({
+      authResult.user.updateProfile(displayName: username, photoURL: url);
+
+      await FirebaseFirestore.instance.collection('users').doc(username).set({
         'username': username,
         'email': email,
         'image_url': url,
+        'ratingList': []
       });
     } on PlatformException catch (error) {
       var message = 'An error occurred, please check your credentials!';
@@ -78,14 +78,12 @@ class _AuthScreenState extends State<AuthScreen> {
       });
     } catch (error) {
       print(error);
-      // print(FirebaseAuthError.show(error.code));
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content: Text(FirebaseAuthError.show(error.code)),
           backgroundColor: Theme.of(ctx).errorColor,
         ),
       );
-      // print(error);
       setState(() {
         _isLoading = false;
       });
@@ -100,11 +98,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
       await FirebaseFirestore.instance
           .collection('users')
-          .doc('fb' + userData['id'])
+          .doc(userData['name'])
           .set({
         'username': userData['name'],
         'email': userData['email'],
         'image_url': userData['picture']['data']['url'],
+        'ratingList': []
       });
 
       // Create a credential from the access token
@@ -115,9 +114,9 @@ class _AuthScreenState extends State<AuthScreen> {
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } on FacebookAuthException catch (e) {
-      // handle the FacebookAuthException
+      print(e);
     } on FirebaseAuthException catch (e) {
-      // handle the FirebaseAuthException
+      print(e);
     } finally {}
     return null;
   }
@@ -133,11 +132,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
       await FirebaseFirestore.instance
           .collection('users')
-          .doc('gg' + googleUser.id)
+          .doc(googleUser.displayName)
           .set({
         'username': googleUser.displayName,
         'email': googleUser.email,
         'image_url': googleUser.photoUrl,
+        'ratingList': []
       });
 
       // Create a new credential
@@ -149,7 +149,7 @@ class _AuthScreenState extends State<AuthScreen> {
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthError catch (e) {
-      //
+      print(e);
     } finally {}
     return null;
   }
