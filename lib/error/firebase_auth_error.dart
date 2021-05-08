@@ -8,7 +8,7 @@ class FirebaseAuthError {
         return 'Nie znaleziono użytkownika o danym adresie email.';
 
       case 'ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL':
-        return 'The e-mail address in your Facebook account has been registered in the system before. Please login by trying other methods with this e-mail address.';
+        return 'Ten adres e-mail jest już zarejestrowany. Spróbuj użyć innego adresu e-mail.';
 
       case 'wrong-password':
         return 'Adres email, bądź hasło jest nieprawidłowe.';
@@ -17,7 +17,7 @@ class FirebaseAuthError {
         return 'Zbyt dużo nieudanych prób! Spróbuj ponownie później.';
 
       default:
-        return 'Nastąpił nieoczekiwany błąd. Spróbuj ponownie później.';
+        return 'Nastąpił nieoczekiwany błąd. Sprawdź połączenie sieciowe lub spróbuj ponownie później.';
     }
   }
 }

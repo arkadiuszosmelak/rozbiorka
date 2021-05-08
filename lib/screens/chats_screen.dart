@@ -98,7 +98,7 @@ class ChatsScreen extends StatelessWidget {
                                                       .replaceAll(
                                                           '\n', '       ')
                                                       .length >
-                                                  30
+                                                  35
                                               ? document
                                                       .data()['lastMessage']
                                                       .replaceAll(
@@ -109,13 +109,13 @@ class ChatsScreen extends StatelessWidget {
                                                                       .data()[
                                                                           'lastMessage']
                                                                       .length <
-                                                                  40
+                                                                  35
                                                               ? document
                                                                   .data()[
                                                                       'lastMessage']
                                                                   .length
-                                                              : 40) +
-                                                  ' ......'
+                                                              : 35) +
+                                                  '...'
                                               : document
                                                   .data()['lastMessage']
                                                   .replaceAll('\n', '       ')),

@@ -46,15 +46,12 @@ class UserOrders extends StatelessWidget {
                 }
                 var images = document.data()['images'];
 
-                // print(perfume);
-
                 for (var i = 0;
                     i < document.data()['perfume'].values.toList().length;
                     i++) {
                   if (perfume[i]['capacity'] == '0') {
                     numberPerfume -= 1;
                   }
-                  // print(numberPerfume);
                 }
 
                 double heightNamePerfumeContainer() {
@@ -76,7 +73,6 @@ class UserOrders extends StatelessWidget {
                     return 125.0;
                   } else if (numberPerfume == 1) {
                     return 425.0;
-                    // return 130.0;
                   } else if (images == 0 && numberPerfume == 2) {
                     return 145.0;
                   } else if (numberPerfume == 2) {
@@ -95,9 +91,6 @@ class UserOrders extends StatelessWidget {
                     return 510.0;
                   }
                 }
-
-                // print(document.data()['username']);
-                // print(thisUser);
 
                 return document.data()['perfume'] == null ||
                         document.data()['perfume'].isEmpty ||

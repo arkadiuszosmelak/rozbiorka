@@ -52,6 +52,7 @@ class _FullVisionScreenState extends State<FullVisionScreen> {
       onWillPop: () {
         zamowienie.zamowienie = {};
         Navigator.pop(context);
+        return null;
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -168,8 +169,6 @@ class _FullVisionScreenState extends State<FullVisionScreen> {
         bottomNavigationBar: GestureDetector(
           onTap: () {
             if (zamowienie.zamowienie.isEmpty) {
-              print('cosik');
-
               showInSnackBar('Dodaj perfumy do zamówienia!', context);
             } else {
               showDialog(

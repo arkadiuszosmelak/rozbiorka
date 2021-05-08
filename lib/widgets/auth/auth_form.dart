@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:rozbiorka/pickers/user_image_picker.dart';
 
@@ -101,7 +100,7 @@ class _AuthFormState extends State<AuthForm> {
                               if (value.isEmpty ||
                                   !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                       .hasMatch(value)) {
-                                return 'Wprowadź poprany adres email';
+                                return 'Wprowadź poprawny adres email';
                               }
                               return null;
                             },

@@ -28,14 +28,14 @@ class PickImagesState extends State<PickImages> {
 
   int _image = 0;
 
-  Future _addUserToDB() async {
+  Future _createAdvertisementInDB() async {
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(_user.displayName)
         .get();
 
     await FirebaseFirestore.instance
-        .collection('/advertisement')
+        .collection('advertisement')
         .doc('${widget.uid}')
         .set({
       'username': _user.displayName,
@@ -51,7 +51,7 @@ class PickImagesState extends State<PickImages> {
   Future _addUrlsToDB(String url) async {
     _image += 1;
     await FirebaseFirestore.instance
-        .collection('/advertisement')
+        .collection('advertisement')
         .doc('${widget.uid}')
         .update({
       'urlImage$_image': url,
@@ -76,7 +76,7 @@ class PickImagesState extends State<PickImages> {
   }
 
   Future handleUploadImage() async {
-    _addUserToDB();
+    _createAdvertisementInDB();
     FirebaseStorage storage = FirebaseStorage.instance;
     try {
       for (int i = 0; i < _compressedFiles.length; i++) {
@@ -125,7 +125,6 @@ class PickImagesState extends State<PickImages> {
       _images = resultList;
       _compressedFiles = fileImageArray;
       print('${_user.email}');
-      // print('$_users');
     });
   }
 

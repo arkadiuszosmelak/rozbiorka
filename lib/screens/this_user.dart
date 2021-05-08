@@ -9,7 +9,6 @@ class ThisUser {
     if (username.isEmpty) {
       username = user;
     }
-    print(username);
 
     final userData = await FirebaseFirestore.instance
         .collection('users')

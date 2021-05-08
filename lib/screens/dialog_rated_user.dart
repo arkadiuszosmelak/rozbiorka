@@ -27,7 +27,6 @@ class _DialogRatedUserState extends State<DialogRatedUser> {
     var getDoc = await document.get();
     List<dynamic> ratingList = getDoc.data()['ratingList'];
     ratingList.add(i);
-    // print(ratingList);
     document.update({'ratingList': ratingList});
   }
 
@@ -61,19 +60,12 @@ class _DialogRatedUserState extends State<DialogRatedUser> {
         textAlign: TextAlign.center,
       ),
       children: [
-        Text(
-          'Oceń sprzedawcę uwzgledniając komunikatywność oraz czas wysyłki.',
-          textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Text(
+            'Oceń sprzedawcę uwzgledniając komunikatywność oraz czas wysyłki.',
+          ),
         ),
-        // IconButton(
-        //   icon: rating != 0 ? Icon(Icons.star) : Icon(Icons.star_outline),
-        //   onPressed: () => setState(
-        //     () {
-        //       rating = 5;
-        //       print(rating);
-        //     },
-        //   ),
-        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -84,7 +76,6 @@ class _DialogRatedUserState extends State<DialogRatedUser> {
             stars(5),
           ],
         ),
-        // Text('UWAGA! Oceniasz sprzedającego, nie p')
         FlatButton(
           child: Text(
             'Oceń',

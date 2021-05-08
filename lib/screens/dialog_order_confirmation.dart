@@ -19,7 +19,7 @@ class DialogOrderConfiration extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             'Twoje zamówienie zostało złożone. Teraz możesz skontaktować się ze sprzedającym.',
-            textAlign: TextAlign.center,
+            // textAlign: TextAlign.center,
           ),
         ),
         // SizedBox(
